@@ -1,33 +1,87 @@
 package com.example.tiktak
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_play.*
+import kotlinx.android.synthetic.main.dialog_message.*
+import kotlinx.android.synthetic.main.dialog_message.view.*
 
 class LoadTwoPlayer(private var activity: PlayActivity) {
     private var click = 1
     private var gamePanel = mutableListOf<MutableList<String>>()
     private var winner = ""
+    private var xWinCount = 0
+    private var oWinCount = 0
+    private var draw = 0
 
     fun start(){
         fillGamePanel()
         setOnClickArea()
     }
+
+    private fun restart() {
+        gamePanel.clear()
+        winner=""
+        fillGamePanel()
+        click=1
+        setTextOnTextViews()
+    }
+    private fun setTextOnTextViews(){
+        activity.area11.text = ""
+        activity.area12.text = ""
+        activity.area13.text = ""
+        activity.area21.text = ""
+        activity.area22.text = ""
+        activity.area23.text = ""
+        activity.area31.text = ""
+        activity.area32.text = ""
+        activity.area33.text = ""
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun check() {
         checkWinner()
         Log.d("Clickable","$click")
+        activity.playerx.text = "X: $xWinCount"
+        activity.playero.text = "O: $oWinCount"
         if(winner.length>0 && winner != "draw"){
-            Toast.makeText(activity,winner+" victory",Toast.LENGTH_SHORT).show()
+            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_message,null)
+            val dialog = AlertDialog.Builder(activity).setView(view).show()
+            dialog.setCancelable(false)
+            view.tv_whoiswinner.text = "$winner victory ! !"
+            view.iv_winner.setImageResource(R.drawable.winner)
+            dialog.btn_restart.setOnClickListener {
+                dialog.dismiss()
+                restart()
+            }
         }else if(click == 10){
-            Toast.makeText(activity,"Draw !!",Toast.LENGTH_LONG).show()
+            draw++
+            activity.draw.text = "Draws: $draw"
+            val view = LayoutInflater.from(activity).inflate(R.layout.dialog_message,null)
+            val dialog = AlertDialog.Builder(activity).setView(view).show()
+            dialog.setCancelable(false)
+            view.tv_whoiswinner.text = "Draw ! !"
+            view.iv_winner.setImageResource(R.drawable.draw)
+            dialog.btn_restart.setOnClickListener {
+                dialog.dismiss()
+                restart()
+            }
         }
     }
 
     private fun checkWinner() {
         winner = if(checkColumn().winner == "X" || checkDiagonal().winner == "X" || checkRow().winner == "X"){
+            xWinCount++
             "X"
         }else if(checkColumn().winner == "O" || checkDiagonal().winner == "O" || checkRow().winner == "O"){
+            oWinCount++
             "O"
         }else if(checkColumn().winner == "draw" || checkDiagonal().winner == "draw" || checkRow().winner == "draw"){
             "draw"
@@ -79,9 +133,13 @@ class LoadTwoPlayer(private var activity: PlayActivity) {
         return Winner("")
     }
 
-
+    @SuppressLint("NewApi")
     private fun viewFuncition(textView: TextView, row:Int, col:Int){
         if(textView.text.isEmpty()){
+
+            val vibration = activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            vibration.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+
             if(click%2==0){
                 textView.text = "O"
             }else{

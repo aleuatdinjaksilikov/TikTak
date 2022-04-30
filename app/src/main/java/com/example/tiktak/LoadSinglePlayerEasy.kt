@@ -1,9 +1,14 @@
 package com.example.tiktak
 
 import android.app.AlertDialog
+import android.content.Context
+import android.os.Build
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import kotlinx.android.synthetic.main.activity_single_player.*
 
 class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
@@ -18,6 +23,7 @@ class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
     private var isShowDialog = false
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun start(){
         fillGamePanel()
         setOnClickArea()
@@ -47,6 +53,7 @@ class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
         activitySingle.area33.text = ""
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setOnClickArea() {
         activitySingle.area11.setOnClickListener {
             clickView(it as TextView,0,0,1)
@@ -77,10 +84,15 @@ class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
         }
     }
 
-    private fun clickView(view: TextView,x:Int,y:Int,number:Int) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun clickView(view: TextView, x:Int, y:Int, number:Int) {
         if(!isPlayerSet){
 
             if(view.text.toString().isEmpty()){
+
+                val vibration = activitySingle.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vibration.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+
                 if(click%2==0){
                     view.text = "O"
                 }else{
@@ -142,6 +154,7 @@ class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
             .setMessage(str)
             .setPositiveButton("Reset", null)
             .show()
+        dialog.setCancelable(false)
         var button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
 
         button.setOnClickListener {
@@ -149,10 +162,11 @@ class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
             isShowDialog = false
             restart()
         }
-        activitySingle.playerx.text = "PlayerX: $xWinCount"
-        activitySingle.playero.text = "PlayerO: $oWinCount"
+        activitySingle.playerx.text = "X: $xWinCount"
+        activitySingle.playero.text = "O: $oWinCount"
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun randomComputer() {
         if(set.isNotEmpty() && !isShowDialog){
             
@@ -188,7 +202,12 @@ class LoadSinglePlayerEasy(private val activitySingle: SinglePlayer) {
         }
     }
 
-    private fun setRandomNumber(view:TextView,x:Int,y:Int,number:Int) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setRandomNumber(view:TextView, x:Int, y:Int, number:Int) {
+
+        val vibration = activitySingle.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibration.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
+
         if(click%2==0){
             view.text = "O"
         }else{

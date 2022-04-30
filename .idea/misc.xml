@@ -12,9 +12,12 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/drawable/settings.xml" value="0.1935" />
         <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/drawable/twoplayer.xml" value="0.1935" />
         <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/activity_main2.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/activity_play.xml" value="0.176" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/activity_settings.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/activity_single_player.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/activity_splash.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/TikTak/app/src/main/res/layout/dialog_message.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
