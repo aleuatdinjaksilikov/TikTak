@@ -7,5 +7,7 @@ class SinglePlayer : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_single_player)
+        val load=LoadSinglePlayerEasy(this)
+        load.start()
     }
 }
